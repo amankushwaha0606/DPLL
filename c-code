@@ -1,0 +1,132 @@
+#include <stdio.h>
+#include<string.h>
+#include <stdbool.h>
+
+int size = 20;
+char charList[26];
+int count=0;
+
+//a=0,
+//b=1,
+//( a#b)^(C#d)
+
+
+bool unitProp(char* str){
+    
+    int i;
+    bool isUnit=false;
+    char c;
+    for( i=0; i<strlen(str); i++){
+        if(str[i]=='('){
+            i++;
+            int temp=i;
+            for(;str[i]!=')'; i++){
+                continue;
+            }
+            if(i-temp<3){
+                isUnit=true;
+                c=str[i-1];
+            }
+        }
+    }
+    // make fixed string to 0 or 1 depending upon the value of temp
+}
+
+bool evalexp(char* str){
+    
+    char str2[size];
+    int j=0,i;
+    for( i=0; i<strlen(str); i++){
+        if(str[i]=='-'){
+            i++;
+            if(str[i]=='1'){
+                str2[j]='0';
+            } else {
+                str2[j]='1';
+            }
+            j++;
+            continue;
+        }
+        str2[j]=str[i];
+        j++;
+    }
+    
+    printf(" last experision 2 --- %d %d %s\n", i,j,str2);
+    //return true;
+    
+    for( int i=0; i<strlen(str2); i++){
+        if(str2[i]=='('){
+            i++;
+            bool present = false;
+            while(str2[i]!=')'){
+                if(str2[i]=='1'){
+                    present = true;
+                }
+                i++;
+            }
+            if(!present){
+                printf("UNSAT\n\n");
+                return false;
+            }
+        }
+    }
+    printf("SAT\n\n");
+    return true;
+}
+
+bool makeexp(char* str, int varCount, char value){
+    
+    if(varCount==count){
+        printf(" last experision 1 --- %s\n", str);
+        return evalexp(str);
+    }
+    
+    char str2[size];
+    for( int i=0; i<strlen(str); i++){
+        if(str[i]==charList[varCount]){
+            str2[i]=value;
+        } else {
+            str2[i]=str[i];
+        }
+    }
+    //printf("\n loop %d %s", varCount, str2);
+    
+    bool value1 = makeexp( str2, varCount+1, '0');
+    bool value2 = makeexp( str2, varCount+1, '1');
+    return (value1||value2);
+}
+
+bool count_unique_char(char* str) {
+    
+	int hash[26] = { 0 };
+	int i;
+	for (i = 0; i < strlen(str); ++i) {
+	    if(str[i]<='z'||str[i]>='a'){
+	        hash[str[i]-'a'] = 1;
+		}
+	}
+
+	for (i = 0; i < 26; ++i) {
+		if(hash[i]==1){
+		    charList[count]='a'+i;
+		    count++;
+		}
+	}
+	
+	printf("%s %d\n", charList,count);
+	
+	bool value1 = makeexp( str,0,'0');
+	bool value2 = makeexp( str,0,'1');
+	
+    return (value1||value2);
+    
+}
+
+int main() {
+    char str[size];
+    gets(str);
+    bool x = count_unique_char(str);
+    printf(" ------- %s --------- ", x ? "true" : "false");
+    printf("\n last - %s", str);
+    return 0;
+}
