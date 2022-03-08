@@ -1,0 +1,77 @@
+int bracket_Count=0;
+char charList[26];
+
+int convertToASCII(char s)
+{
+    return (int)s-32-65+1;
+    
+    //for (int i = 0; i < s.length(); i++)
+    //{
+    //    cout << (int)s[i]-32-65+1<< endl;
+    //}
+}
+
+int count_unique_char(string str) {
+	int hash[26] = { 0 };
+	int i, count=0;
+	for (i = 0; i < str.length(); ++i) {
+        
+        if(str[i]=='(' || str[i]==')') bracket_Count++;
+        
+	    if(str[i]<='z'||str[i]>='a'){
+	        hash[str[i]-'a'] = 1;
+		}
+	}
+	for (i = 0; i < 26; ++i) {
+		if(hash[i]==1){
+		    charList[count]='a'+i;
+		    count++;
+		}
+	}
+    return count;
+}
+
+int main() {
+    string plainText, f1="a";
+    getline(cin, plainText);
+    
+    int unique_Char = count_unique_char(plainText);
+    
+    vector<vector<int>> literal_list_per_clause;
+    vector<int> literal_frequency(unique_Char,0);
+    literal_list_per_clause.resize(bracket_Count/2);
+    
+    int clause_Num=0;
+    for(int i=0;i<plainText.length();i++){
+        
+        bool isneg=false;
+        
+        if(plainText[i]=='('){
+            clause_Num++;
+            continue;
+        }
+        
+        if(plainText[i]==')') continue;
+        if(convertToASCII(plainText[i])<1 || convertToASCII(plainText[i])>26) {
+            isneg=true;
+            i++;
+        }
+        
+        if(convertToASCII(plainText[i])<27){
+            if(isneg){
+                literal_list_per_clause[clause_Num].push_back(-convertToASCII(plainText[i]));
+                literal_frequency[ convertToASCII(plainText[i])-1]++;
+            } else {
+                literal_frequency[convertToASCII(plainText[i])-1]++;
+                literal_list_per_clause[clause_Num].push_back(convertToASCII(plainText[i]));
+            }
+        }
+    }
+    
+    for(int i=0;i<clause_Num;i++){
+        for(int j=0;j<literal_list_per_clause[i].size();j++){
+            cout<<literal_list_per_clause[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+}
