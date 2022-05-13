@@ -1,14 +1,11 @@
+#include<bits/stdc++.h>
+using namespace std;
+
 int bracket_Count=0;
 char charList[26];
 
-int convertToASCII(char s)
-{
+int convertToASCII(char s){
     return (int)s-32-65+1;
-    
-    //for (int i = 0; i < s.length(); i++)
-    //{
-    //    cout << (int)s[i]-32-65+1<< endl;
-    //}
 }
 
 int count_unique_char(string str) {
