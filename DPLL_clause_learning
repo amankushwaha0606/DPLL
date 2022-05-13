@@ -2,12 +2,11 @@
 
 using namespace std;
 
-// enum to store exit states for certain functions in the solver
-enum Return_value
+enum Re turn_value
 {
-    r_satisfied,   // the formula has been satisfied
-    r_unsatisfied, //   ---unsatisfied
-    r_normal       // the formula is unresolved so far
+    r_satisfied,   
+    r_unsatisfied, 
+    r_normal       
 };
 
 class SATSolverCDCL
@@ -263,10 +262,10 @@ int SATSolverCDCL::literal_to_variable_index(int variable)
     return (variable > 0) ? variable - 1 : -variable - 1;
 }
 
-/*
- * function to perform conflict analysis and backtrack
- * Arguments : decision_level - the decision level of the conflict
- * Return value : the backtracked decision level
+
+/////////  * function to perform conflict analysis and backtrack
+/////////  * Arguments : decision_level - the decision level of the conflict
+////////  * Return value : the backtracked decision level
 
 bool SATSolverCDCL::all_variables_assigned()
 {
@@ -298,7 +297,7 @@ void SATSolverCDCL::show_result(int result_status)
     }
     else // if the formula is unsatisfiable
     {
-        cout << "UNSAT";
+        cout << "UNSATISFIABLE";
     }
 }
 
