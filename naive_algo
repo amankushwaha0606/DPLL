@@ -6,11 +6,6 @@ int size = 20;
 char charList[26];
 int count=0;
 
-//a=0,
-//b=1,
-//( a#b)^(C#d)
-
-
 bool unitProp(char* str){
     
     int i;
@@ -29,6 +24,7 @@ bool unitProp(char* str){
             }
         }
     }
+    return true;
     // make fixed string to 0 or 1 depending upon the value of temp
 }
 
